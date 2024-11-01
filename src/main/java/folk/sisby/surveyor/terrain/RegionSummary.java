@@ -47,8 +47,8 @@ public class RegionSummary {
 	protected boolean dirty = false;
 
 	public RegionSummary(DynamicRegistryManager manager) {
-		biomePalette = new RegistryPalette<>(manager.get(RegistryKeys.BIOME));
-		blockPalette = new RegistryPalette<>(manager.get(RegistryKeys.BLOCK));
+		biomePalette = new RegistryPalette<>(manager.getOrThrow(RegistryKeys.BIOME));
+		blockPalette = new RegistryPalette<>(manager.getOrThrow(RegistryKeys.BLOCK));
 	}
 
 	public static <T, O> List<O> mapIterable(Iterable<T> palette, Function<T, O> mapper) {
@@ -93,8 +93,8 @@ public class RegionSummary {
 
 	public static RegionSummary readNbt(NbtCompound nbt, DynamicRegistryManager manager, ChunkPos pos) {
 		RegionSummary summary = new RegionSummary(manager);
-		Registry<Biome> biomeRegistry = manager.get(RegistryKeys.BIOME);
-		Registry<Block> blockRegistry = manager.get(RegistryKeys.BLOCK);
+		Registry<Biome> biomeRegistry = manager.getOrThrow(RegistryKeys.BIOME);
+		Registry<Block> blockRegistry = manager.getOrThrow(RegistryKeys.BLOCK);
 		NbtList biomeList = nbt.getList(KEY_BIOMES, NbtElement.STRING_TYPE);
 		Map<Integer, Integer> biomeRemap = new Int2IntArrayMap(biomeList.size());
 		for (int i = 0; i < biomeList.size(); i++) {
@@ -157,8 +157,8 @@ public class RegionSummary {
 	}
 
 	public NbtCompound writeNbt(DynamicRegistryManager manager, NbtCompound nbt, ChunkPos regionPos) {
-		Registry<Biome> biomeRegistry = manager.get(RegistryKeys.BIOME);
-		Registry<Block> blockRegistry = manager.get(RegistryKeys.BLOCK);
+		Registry<Biome> biomeRegistry = manager.getOrThrow(RegistryKeys.BIOME);
+		Registry<Block> blockRegistry = manager.getOrThrow(RegistryKeys.BLOCK);
 		nbt.put(KEY_BIOMES, new NbtList(mapIterable(biomePalette.view(), b -> NbtString.of(biomeRegistry.getId(b).toString())), NbtElement.STRING_TYPE));
 		nbt.put(KEY_BLOCKS, new NbtList(mapIterable(blockPalette.view(), b -> NbtString.of(blockRegistry.getId(b).toString())), NbtElement.STRING_TYPE));
 		nbt.putIntArray(KEY_BIOME_WATER, mapIterable(biomePalette.view(), Biome::getWaterColor));

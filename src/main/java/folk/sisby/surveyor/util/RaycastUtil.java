@@ -5,11 +5,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkSectionPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.RaycastContext;
@@ -25,7 +21,7 @@ public class RaycastUtil {
 		double y = blockRadius * Math.tan(phi);
 		double distance;
 		double bottom = player.getWorld().getBottomY() - cameraPos.y;
-		double top = player.getWorld().getTopY() - cameraPos.y;
+		double top = player.getWorld().getTopYInclusive() - cameraPos.y;
 		if (y < bottom || y > top) { // Distance To Circular Planes
 			distance = Math.abs(MathHelper.clamp(y, bottom, top) / Math.sin(phi));
 		} else { // Distance To Curved Surface

@@ -12,12 +12,7 @@ import folk.sisby.surveyor.packet.S2CStructuresAddedPacket;
 import folk.sisby.surveyor.terrain.RegionSummary;
 import folk.sisby.surveyor.util.ChunkUtil;
 import folk.sisby.surveyor.util.MapUtil;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtIo;
-import net.minecraft.nbt.NbtList;
-import net.minecraft.nbt.NbtSizeTracker;
-import net.minecraft.nbt.NbtString;
+import net.minecraft.nbt.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -34,12 +29,7 @@ import net.minecraft.world.gen.structure.StructureType;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class WorldStructureSummary {
@@ -164,8 +154,8 @@ public class WorldStructureSummary {
 	public void put(ServerWorld world, StructureStart start) {
 		if (Surveyor.CONFIG.structures == SystemMode.FROZEN) return;
 		ChunkPos rPos = regionPosOf(start.getPos());
-		RegistryKey<Structure> key = world.getRegistryManager().get(RegistryKeys.STRUCTURE).getKey(start.getStructure()).orElseThrow();
-		Optional<RegistryKey<StructureType<?>>> type = world.getRegistryManager().get(RegistryKeys.STRUCTURE_TYPE).getKey(start.getStructure().getType());
+		RegistryKey<Structure> key = world.getRegistryManager().getOrThrow(RegistryKeys.STRUCTURE).getKey(start.getStructure()).orElseThrow();
+		Optional<RegistryKey<StructureType<?>>> type = world.getRegistryManager().getOrThrow(RegistryKeys.STRUCTURE_TYPE).getKey(start.getStructure().getType());
 		if (!start.hasChildren()) {
 			Surveyor.LOGGER.error("Cowardly refusing to save structure {} as it has no pieces! Report this to the structure mod author!", key.getValue());
 			return;
@@ -175,7 +165,7 @@ public class WorldStructureSummary {
 			return;
 		}
 		regions.computeIfAbsent(rPos, k -> new RegionStructureSummary()).put(world, start);
-		List<TagKey<Structure>> tags = world.getRegistryManager().get(RegistryKeys.STRUCTURE).getEntry(start.getStructure()).streamTags().toList();
+		List<TagKey<Structure>> tags = world.getRegistryManager().getOrThrow(RegistryKeys.STRUCTURE).getEntry(start.getStructure()).streamTags().toList();
 		structureTypes.put(key, type.orElseThrow());
 		structureTags.putAll(key, tags);
 		dirty();

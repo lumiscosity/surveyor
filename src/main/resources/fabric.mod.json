@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "${modId}",
+	"id": "surveyor",
 	"version": "${version}",
 	"name": "${modName}",
 	"description": "${modDescription}",
@@ -16,15 +16,15 @@
 		"sources": "${sources}"
 	},
 	"license": "${license}",
-	"icon": "assets/${modId}/icon.png",
-	"accessWidener": "${modId}.accesswidener",
+	"icon": "assets/surveyor/icon.png",
+	"accessWidener": "surveyor.accesswidener",
 	"mixins": [
-		"${modId}.mixins.json"
+		"surveyor.mixins.json"
 	],
 	"depends": {
-		"minecraft": ">=${mc}",
-		"fabricloader": ">=${fl}",
-		"fabric-api": ">=${fapi}"
+		"minecraft": ">=1.21.2",
+		"fabricloader": ">=0.16.7",
+		"fabric-api": ">=0.106.1+1.21.2"
 	},
 	"entrypoints": {
 		"main": [

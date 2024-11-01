@@ -82,7 +82,7 @@ public class RegionStructureSummary {
 	}
 
 	public boolean contains(World world, StructureStart start) {
-		RegistryKey<Structure> key = world.getRegistryManager().get(RegistryKeys.STRUCTURE).getKey(start.getStructure()).orElse(null);
+		RegistryKey<Structure> key = world.getRegistryManager().getOrThrow(RegistryKeys.STRUCTURE).getKey(start.getStructure()).orElse(null);
 		if (key == null) {
 			Surveyor.LOGGER.error("Encountered an unregistered structure! {} | {}", start, start.getStructure());
 			return true;
@@ -103,7 +103,7 @@ public class RegionStructureSummary {
 	}
 
 	public void put(ServerWorld world, StructureStart start) {
-		RegistryKey<Structure> key = world.getRegistryManager().get(RegistryKeys.STRUCTURE).getKey(start.getStructure()).orElseThrow();
+		RegistryKey<Structure> key = world.getRegistryManager().getOrThrow(RegistryKeys.STRUCTURE).getKey(start.getStructure()).orElseThrow();
 		structures.computeIfAbsent(key, k -> new ConcurrentHashMap<>());
 		ChunkPos pos = start.getPos();
 		StructureStartSummary summary = summarisePieces(StructureContext.from(world), start);
