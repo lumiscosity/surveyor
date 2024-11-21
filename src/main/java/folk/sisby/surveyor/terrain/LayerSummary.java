@@ -127,7 +127,7 @@ public class LayerSummary {
 		UInts.writeBuf(glint, buf);
 	}
 
-	public void fillEmptyFloors(int depthOffset, int minDepth, int maxDepth, Raw outLayer) {
+	public void fillEmptyFloors(int depthOffset, int minDepth, int maxDepth, LayerSummary.Raw outLayer) {
 		int i = 0;
 		for (int j = 0; j < 256; j++) {
 			if (found.get(j)) {
