@@ -16,15 +16,15 @@
 		"sources": "${sources}"
 	},
 	"license": "${license}",
-	"icon": "assets/surveyor/icon.png",
-	"accessWidener": "surveyor.accesswidener",
+	"icon": "assets/${modId}/icon.png",
+	"accessWidener": "${modId}.accesswidener",
 	"mixins": [
-		"surveyor.mixins.json"
+		"${modId}.mixins.json"
 	],
 	"depends": {
-		"minecraft": ">=1.21.2",
-		"fabricloader": ">=0.16.7",
-		"fabric-api": ">=0.106.1+1.21.2"
+		"minecraft": ">=${mc}",
+		"fabricloader": ">=${fl}",
+		"fabric-api": ">=${fapi}"
 	},
 	"entrypoints": {
 		"main": [
