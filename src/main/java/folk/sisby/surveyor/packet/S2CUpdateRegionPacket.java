@@ -20,7 +20,7 @@ import java.util.List;
 public record S2CUpdateRegionPacket(boolean shared, ChunkPos regionPos, List<Integer> biomePalette, List<Integer> blockPalette, BitSet set, List<ChunkSummary> chunks) implements S2CPacket {
 	public static final Id<S2CUpdateRegionPacket> ID = new Id<>(Identifier.of(Surveyor.ID, "s2c_update_region"));
 	public static final PacketCodec<PacketByteBuf, S2CUpdateRegionPacket> CODEC = PacketCodec.tuple(
-		PacketCodecs.BOOL, S2CUpdateRegionPacket::shared,
+		PacketCodecs.BOOLEAN, S2CUpdateRegionPacket::shared,
 		PacketCodecs.VAR_LONG.xmap(ChunkPos::new, ChunkPos::toLong), S2CUpdateRegionPacket::regionPos,
 		PacketCodecs.INTEGER.collect(PacketCodecs.toList()), S2CUpdateRegionPacket::biomePalette,
 		PacketCodecs.INTEGER.collect(PacketCodecs.toList()), S2CUpdateRegionPacket::blockPalette,

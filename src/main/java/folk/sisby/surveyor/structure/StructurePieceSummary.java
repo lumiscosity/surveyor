@@ -54,7 +54,7 @@ public class StructurePieceSummary extends StructurePiece {
 		nbt.putString("id", typeKey.getValue().toString());
 		nbt.putIntArray("BB", ArrayUtil.ofBlockBox(this.boundingBox));
 		Direction direction = this.getFacing();
-		nbt.putInt("O", direction == null ? -1 : direction.getHorizontal());
+		nbt.putInt("O", direction == null ? -1 : direction.getHorizontalQuarterTurns());
 		nbt.putInt("GD", this.chainLength);
 		this.writeNbt(null, nbt);  // context only used for writeNbt
 		return nbt;

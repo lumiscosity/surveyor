@@ -24,7 +24,7 @@ import java.util.Map;
 public record S2CStructuresAddedPacket(boolean shared, Map<RegistryKey<Structure>, Map<ChunkPos, StructureStartSummary>> structures, Map<RegistryKey<Structure>, RegistryKey<StructureType<?>>> types, Multimap<RegistryKey<Structure>, TagKey<Structure>> tags) implements S2CPacket {
 	public static final Id<S2CStructuresAddedPacket> ID = new Id<>(Identifier.of(Surveyor.ID, "s2c_structures_added"));
 	public static final PacketCodec<PacketByteBuf, S2CStructuresAddedPacket> CODEC = PacketCodec.tuple(
-		PacketCodecs.BOOL, S2CStructuresAddedPacket::shared,
+		PacketCodecs.BOOLEAN, S2CStructuresAddedPacket::shared,
 		SurveyorPacketCodecs.STRUCTURE_SUMMARIES, S2CStructuresAddedPacket::structures,
 		SurveyorPacketCodecs.STRUCTURE_TYPES, S2CStructuresAddedPacket::types,
 		SurveyorPacketCodecs.STRUCTURE_TAGS, S2CStructuresAddedPacket::tags,
