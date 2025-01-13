@@ -12,19 +12,20 @@ import net.minecraft.util.math.BlockPos;
 import java.util.Optional;
 import java.util.UUID;
 
-public record SimplePointLandmark(BlockPos pos, Optional<UUID> optionalOwner, Optional<DyeColor> optionalColor, Optional<Text> optionalName, Optional<Identifier> optionalTexture) implements VariableLandmark<SimplePointLandmark> {
+public record SimplePointLandmark(BlockPos pos, Optional<UUID> optionalOwner, Optional<DyeColor> optionalColor, Optional<Text> optionalName, Optional<Text> optionalDescription, Optional<Identifier> optionalTexture) implements VariableLandmark<SimplePointLandmark> {
 	public static final LandmarkType<SimplePointLandmark> TYPE = new SimpleLandmarkType<>(
 		Identifier.of(Surveyor.ID, "point"),
 		pos -> RecordCodecBuilder.create(instance -> instance.group(
 			Uuids.CODEC.optionalFieldOf("owner").forGetter(VariableLandmark::optionalOwner),
 			DyeColor.CODEC.optionalFieldOf("color").orElse(null).forGetter(VariableLandmark::optionalColor),
 			TextCodecs.CODEC.optionalFieldOf("name").orElse(null).forGetter(VariableLandmark::optionalName),
+			TextCodecs.CODEC.optionalFieldOf("description").orElse(null).forGetter(VariableLandmark::optionalDescription),
 			Identifier.CODEC.optionalFieldOf("texture").orElse(null).forGetter(VariableLandmark::optionalTexture)
-		).apply(instance, (owner, color, name, texture) -> new SimplePointLandmark(pos, owner, color, name, texture)))
+		).apply(instance, (owner, color, name, description, texture) -> new SimplePointLandmark(pos, owner, color, name, description, texture)))
 	);
 
-	public SimplePointLandmark(BlockPos pos, UUID owner, DyeColor color, Text name, Identifier texture) {
-		this(pos, Optional.ofNullable(owner), Optional.ofNullable(color), Optional.ofNullable(name), Optional.ofNullable(texture));
+	public SimplePointLandmark(BlockPos pos, UUID owner, DyeColor color, Text name, Text description, Identifier texture) {
+		this(pos, Optional.ofNullable(owner), Optional.ofNullable(color), Optional.ofNullable(name), Optional.ofNullable(description), Optional.ofNullable(texture));
 	}
 
 	@Override

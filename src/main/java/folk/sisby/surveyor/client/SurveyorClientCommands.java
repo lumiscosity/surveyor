@@ -204,7 +204,7 @@ public class SurveyorClientCommands {
 			feedback.accept(Text.literal("[Surveyor] ").formatted(Formatting.DARK_RED).append(Text.literal("A landmark exists of that type and position!").formatted(Formatting.YELLOW)));
 			return 0;
 		}
-		summary.landmarks().put(world, new SimplePointLandmark(pos, global ? null : SurveyorClient.getClientUuid(), color, Text.of(name), null));
+		summary.landmarks().put(world, new SimplePointLandmark(pos, global ? null : SurveyorClient.getClientUuid(), color, Text.of(name.contains("\\n") ? name.substring(0, name.indexOf("\\n")) : name), name.contains("\\n") ? Text.of(name.substring(name.indexOf("\\n") + 2)) : null, null));
 		feedback.accept(Text.literal("[Surveyor] ").formatted(Formatting.DARK_RED).append(Text.literal("%s added successfully!".formatted(global ? "Landmark" : "Waypoint")).formatted(Formatting.GREEN)));
 		return 1;
 	}
