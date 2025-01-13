@@ -27,6 +27,12 @@ public interface VariableLandmark<T extends VariableLandmark<T>> extends Landmar
 
 	Optional<Text> optionalName();
 
+	default @Nullable Text description() {
+		return optionalDescription().orElse(null);
+	}
+
+	Optional<Text> optionalDescription();
+
 	default @Nullable Identifier texture() {
 		return optionalTexture().orElse(null);
 	}
