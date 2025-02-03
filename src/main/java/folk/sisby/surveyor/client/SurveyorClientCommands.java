@@ -25,6 +25,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.DefaultPosArgument;
 import net.minecraft.command.argument.IdentifierArgumentType;
+import net.minecraft.component.ComponentMap;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
@@ -204,7 +205,7 @@ public class SurveyorClientCommands {
 			feedback.accept(Text.literal("[Surveyor] ").formatted(Formatting.DARK_RED).append(Text.literal("A landmark exists of that type and position!").formatted(Formatting.YELLOW)));
 			return 0;
 		}
-		summary.landmarks().put(world, new SimplePointLandmark(pos, global ? null : SurveyorClient.getClientUuid(), color, Text.of(name.contains("\\n") ? name.substring(0, name.indexOf("\\n")) : name), name.contains("\\n") ? Text.of(name.substring(name.indexOf("\\n") + 2)) : null, null));
+		summary.landmarks().put(world, new SimplePointLandmark(pos, global ? null : SurveyorClient.getClientUuid(), color, Text.of(name.contains("\\n") ? name.substring(0, name.indexOf("\\n")) : name), ComponentMap.EMPTY, null));
 		feedback.accept(Text.literal("[Surveyor] ").formatted(Formatting.DARK_RED).append(Text.literal("%s added successfully!".formatted(global ? "Landmark" : "Waypoint")).formatted(Formatting.GREEN)));
 		return 1;
 	}

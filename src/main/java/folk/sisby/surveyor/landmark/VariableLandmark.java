@@ -1,5 +1,6 @@
 package folk.sisby.surveyor.landmark;
 
+import net.minecraft.component.ComponentMap;
 import net.minecraft.text.Text;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
@@ -27,11 +28,11 @@ public interface VariableLandmark<T extends VariableLandmark<T>> extends Landmar
 
 	Optional<Text> optionalName();
 
-	default @Nullable Text description() {
-		return optionalDescription().orElse(null);
+	default @Nullable ComponentMap components() {
+		return optionalComponents().orElse(null);
 	}
 
-	Optional<Text> optionalDescription();
+	Optional<ComponentMap> optionalComponents();
 
 	default @Nullable Identifier texture() {
 		return optionalTexture().orElse(null);
